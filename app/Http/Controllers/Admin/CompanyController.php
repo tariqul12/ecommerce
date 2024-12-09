@@ -14,17 +14,11 @@ class CompanyController extends Controller
         return view('admin.company.index', compact('company'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('admin.company.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         self::saveInfo(new Company(), $request);
@@ -82,47 +76,16 @@ class CompanyController extends Controller
             unlink($image);
         }
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Company $company)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($id)
     {
         $company = Company::findOrFail($id);
         return view('admin.company.edit', compact('company'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $id)
     {
         $company = Company::find($id);
         self::saveInfo($company, $request);
         return redirect('company/index')->with('message', 'Company edit successfully');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    // public function destroy($id)
-    // {
-    //     $company = Company::findOrFail($id);
-    //     self::deleteFolderImage($company->logo_jpg);
-    //     self::deleteFolderImage($company->android_app_image);
-    //     self::deleteFolderImage($company->ios_app_image);
-    //     self::deleteFolderImage($company->logo_png);
-    //     self::deleteFolderImage($company->favicon);
-    //     self::deleteFolderImage($company->payment_method_image);
-    //     $company->delete();
-    //     return redirect('company/index')->with('message', 'Company Delete successfully');
-    // }
 }
