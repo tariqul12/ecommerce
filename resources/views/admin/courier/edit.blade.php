@@ -21,46 +21,52 @@
                     <h3 class="card-title">Create Courier Form</h3>
                 </div>
                 <div class="card-body">
-                    <p class="text-muted">{{session('message')}}</p>
-                    <form class="form-horizontal" action="{{route('courier.update', $courier->id)}}" method="POST" enctype="multipart/form-data">
+                    <p class="text-muted">{{ session('message') }}</p>
+                    <form class="form-horizontal" action="{{ route('courier.update', $courier->id) }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="row mb-4">
                             <label for="categoryName" class="col-md-3 form-label">Courier Name</label>
                             <div class="col-md-9">
-                                <input class="form-control" name="name" value="{{$courier->id}}" id="categoryName" placeholder="Courier Name" type="text">
+                                <input class="form-control" name="name" value="{{ $courier->id }}" id="categoryName"
+                                    placeholder="Courier Name" type="text">
                             </div>
                         </div>
                         <div class="row mb-4">
                             <label for="email" class="col-md-3 form-label">Courier Email</label>
                             <div class="col-md-9">
-                                <input class="form-control" name="email" value="{{$courier->email}}" id="email" placeholder="Courier Email" type="email">
+                                <input class="form-control" name="email" value="{{ $courier->email }}" id="email"
+                                    placeholder="Courier Email" type="email">
                             </div>
                         </div>
                         <div class="row mb-4">
                             <label for="mobile" class="col-md-3 form-label">Courier Mobile</label>
                             <div class="col-md-9">
-                                <input class="form-control" name="mobile" value="{{$courier->mobile}}" id="mobile" placeholder="Courier Mobile" type="number">
+                                <input class="form-control" name="mobile" value="{{ $courier->mobile }}" id="mobile"
+                                    placeholder="Courier Mobile" type="number">
                             </div>
                         </div>
                         <div class="row mb-4">
                             <label for="address" class="col-md-3 form-label">Courier Address</label>
                             <div class="col-md-9">
-                                <textarea class="form-control" name="address" id="address" placeholder="Courier Address">{{$courier->address}}</textarea>
+                                <textarea class="form-control" name="address" id="address" placeholder="Courier Address">{{ $courier->address }}</textarea>
                             </div>
                         </div>
                         <div class="row mb-4">
                             <label for="image" class="col-md-3 form-label">Courier Logo</label>
                             <div class="col-md-9">
-                                <input class="form-control" name="logo" id="image" type="file"/>
-                                <img src="{{asset($courier->logo)}}" alt="" height="100">
+                                <input class="dropify" data-height="200" name="logo" id="image" type="file" />
+                                <img src="{{ asset($courier->logo) }}" alt="" height="100">
                             </div>
                         </div>
                         <div class="row mb-4">
                             <label class="col-md-3 form-label">Publication Status</label>
                             <div class="col-md-9">
-                                <label><input name="status" {{$courier->status == 1 ? 'checked':''}} type="radio" checked value="1"/>Published</label>
-                                <label><input name="status" {{$courier->status == 0 ? 'checked':''}} type="radio" value="0"/>Unpublished</label>
+                                <label><input name="status" {{ $courier->status == 1 ? 'checked' : '' }} type="radio"
+                                        checked value="1" />Published</label>
+                                <label><input name="status" {{ $courier->status == 0 ? 'checked' : '' }} type="radio"
+                                        value="0" />Unpublished</label>
                             </div>
                         </div>
                         <button class="btn btn-primary" type="submit">Update Courier Info</button>
@@ -69,6 +75,4 @@
             </div>
         </div>
     </div>
-
-
 @endsection

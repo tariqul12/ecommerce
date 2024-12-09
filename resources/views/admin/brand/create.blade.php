@@ -20,14 +20,16 @@
                     <h3 class="card-title">Create Brand Form</h3>
                 </div>
                 <div class="card-body">
-                    <p class="text-muted">{{session('message')}}</p>
-                    <form class="form-horizontal" action="{{route('brand.store')}}" enctype="multipart/form-data" method="post">
+                    <p class="text-muted">{{ session('message') }}</p>
+                    <form class="form-horizontal" action="{{ route('brand.store') }}" enctype="multipart/form-data"
+                        method="post">
                         @csrf
                         <div class="row mb-4">
                             <label for="categoryName" class="col-md-3 form-label">Brand Name</label>
                             <div class="col-md-9">
-                                <input class="form-control" name="name" id="categoryName" placeholder="Brand Name" type="text">
-                                <span class="text-danger">{{$errors->has('name') ? $errors->first('name') : ''}}</span>
+                                <input class="form-control" name="name" id="categoryName" placeholder="Brand Name"
+                                    type="text">
+                                <span class="text-danger">{{ $errors->has('name') ? $errors->first('name') : '' }}</span>
                             </div>
                         </div>
                         <div class="row mb-4">
@@ -39,8 +41,8 @@
                         <div class="row mb-4">
                             <label for="image" class="col-md-3 form-label">Brand Image</label>
                             <div class="col-md-9">
-                                <input class="form-control" name="image" id="image" type="file">
-                                <span class="text-danger">{{$errors->has('image') ? $errors->first('image') : ''}}</span>
+                                <input class="dropify" data-height="200" name="image" id="image" type="file">
+                                <span class="text-danger">{{ $errors->has('image') ? $errors->first('image') : '' }}</span>
                             </div>
                         </div>
                         <div class="row mb-4">

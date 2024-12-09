@@ -54,7 +54,7 @@
                         <div class="row mb-4">
                             <label for="image" class="col-md-3 form-label">Sub Category Image</label>
                             <div class="col-md-9">
-                                <input class="form-control" name="image" id="image" type="file">
+                                <input class="dropify" data-height="200" name="image" id="image" type="file">
                                 <span class="text-danger">{{ $errors->has('image') ? $errors->first('image') : '' }}</span>
                             </div>
                         </div>

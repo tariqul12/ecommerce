@@ -20,28 +20,31 @@
                     <h3 class="card-title">Create Category Form</h3>
                 </div>
                 <div class="card-body">
-                    <p class="text-muted">{{session('message')}}</p>
-                    <form class="form-horizontal" action="{{route('category.store')}}" enctype="multipart/form-data" method="post">
+                    <p class="text-muted">{{ session('message') }}</p>
+                    <form class="form-horizontal" action="{{ route('category.store') }}" enctype="multipart/form-data"
+                        method="post">
                         @csrf
                         <div class="row mb-4">
                             <label for="categoryName" class="col-md-3 form-label">Category Name</label>
                             <div class="col-md-9">
-                                <input class="form-control" name="name" id="categoryName" placeholder="Category Name" type="text">
-                                <span class="text-danger">{{$errors->has('name') ? $errors->first('name') : ''}}</span>
+                                <input class="form-control" name="name" id="categoryName" placeholder="Category Name"
+                                    type="text">
+                                <span class="text-danger">{{ $errors->has('name') ? $errors->first('name') : '' }}</span>
                             </div>
                         </div>
                         <div class="row mb-4">
                             <label for="categoryDescription" class="col-md-3 form-label">Category Description</label>
                             <div class="col-md-9">
-                               <textarea class="form-control" name="description" id="categoryDescription" placeholder="Category Description"></textarea>
-                                <span class="text-danger">{{$errors->has('description') ? $errors->first('description') : ''}}</span>
+                                <textarea class="form-control" name="description" id="categoryDescription" placeholder="Category Description"></textarea>
+                                <span
+                                    class="text-danger">{{ $errors->has('description') ? $errors->first('description') : '' }}</span>
                             </div>
                         </div>
                         <div class="row mb-4">
                             <label for="image" class="col-md-3 form-label">Category Image</label>
                             <div class="col-md-9">
-                                <input class="form-control" name="image" id="image" type="file">
-                                <span class="text-danger">{{$errors->has('image') ? $errors->first('image') : ''}}</span>
+                                <input class="dropify" data-height="200" name="image" id="image" type="file">
+                                <span class="text-danger">{{ $errors->has('image') ? $errors->first('image') : '' }}</span>
                             </div>
                         </div>
                         <div class="row mb-4">
