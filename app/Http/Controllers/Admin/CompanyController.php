@@ -113,16 +113,16 @@ class CompanyController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
-    {
-        $company = Company::findOrFail($id);
-        self::deleteFolderImage($company->logo_jpg);
-        self::deleteFolderImage($company->android_app_image);
-        self::deleteFolderImage($company->ios_app_image);
-        self::deleteFolderImage($company->logo_png);
-        self::deleteFolderImage($company->favicon);
-        self::deleteFolderImage($company->payment_method_image);
-        $company->delete();
-        return redirect('company/index')->with('message', 'Company Delete successfully');
-    }
+    // public function destroy($id)
+    // {
+    //     $company = Company::findOrFail($id);
+    //     self::deleteFolderImage($company->logo_jpg);
+    //     self::deleteFolderImage($company->android_app_image);
+    //     self::deleteFolderImage($company->ios_app_image);
+    //     self::deleteFolderImage($company->logo_png);
+    //     self::deleteFolderImage($company->favicon);
+    //     self::deleteFolderImage($company->payment_method_image);
+    //     $company->delete();
+    //     return redirect('company/index')->with('message', 'Company Delete successfully');
+    // }
 }
