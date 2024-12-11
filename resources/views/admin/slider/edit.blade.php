@@ -14,7 +14,7 @@
     </div>
     <!-- PAGE-HEADER END -->
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6 m-auto">
             <div class="card">
                 <div class="card-header border-bottom">
                     <h3 class="card-title">Edit Slider Form</h3>
@@ -25,13 +25,7 @@
                         enctype="multipart/form-data" method="post">
                         @csrf
                         @method('put')
-                        <div class="row mb-4">
-                            <label for="brandName" class="col-md-3 form-label">Slider Heading</label>
-                            <div class="col-md-9">
-                                <input class="form-control" name="heading" value="{{ $slider->heading }}" id="brandName"
-                                    placeholder="Slider Heading" type="text">
-                            </div>
-                        </div>
+
                         <div class="row mb-4">
                             <label for="brandDescription" class="col-md-3 form-label">Slider Title</label>
                             <div class="col-md-9">
@@ -49,12 +43,6 @@
                             <div class="col-md-9">
                                 <input class="dropify" data-height="200" name="image" id="image" type="file">
                                 <img src="{{ asset($slider->image) }}" alt="" height="100">
-                            </div>
-                        </div>
-                        <div class="row mb-4">
-                            <label for="brandDescription" class="col-md-3 form-label">Slider Button Text</label>
-                            <div class="col-md-9">
-                                <textarea class="form-control" name="button_text" id="brandDescription" placeholder="Slider Button Text">{{ $slider->button_text }}</textarea>
                             </div>
                         </div>
                         <div class="row mb-4">

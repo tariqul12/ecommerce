@@ -14,7 +14,7 @@
     </div>
     <!-- PAGE-HEADER END -->
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6 m-auto">
             <div class="card">
                 <div class="card-header border-bottom">
                     <h3 class="card-title">Create Slider Form</h3>
@@ -24,15 +24,6 @@
                     <form class="form-horizontal" action="{{ route('slider.store') }}" enctype="multipart/form-data"
                         method="post">
                         @csrf
-                        <div class="row mb-4">
-                            <label for="categoryName" class="col-md-3 form-label">Slider Heading</label>
-                            <div class="col-md-9">
-                                <input class="form-control" name="heading" id="categoryName" placeholder="Slider Heading"
-                                    type="text">
-                                <span
-                                    class="text-danger">{{ $errors->has('heading') ? $errors->first('heading') : '' }}</span>
-                            </div>
-                        </div>
                         <div class="row mb-4">
                             <label for="categoryDescription" class="col-md-3 form-label">Slider Title</label>
                             <div class="col-md-9">
@@ -53,14 +44,6 @@
                             <div class="col-md-9">
                                 <input class="dropify" data-height="200" name="image" id="image" type="file">
                                 <span class="text-danger">{{ $errors->has('image') ? $errors->first('image') : '' }}</span>
-                            </div>
-                        </div>
-                        <div class="row mb-4">
-                            <label for="categoryDescription" class="col-md-3 form-label">Slider Button Text</label>
-                            <div class="col-md-9">
-                                <textarea class="form-control" name="button_text" id="categoryDescription" placeholder="Slider Button Text"></textarea>
-                                <span
-                                    class="text-danger">{{ $errors->has('button_text') ? $errors->first('button_text') : '' }}</span>
                             </div>
                         </div>
                         <div class="row mb-4">

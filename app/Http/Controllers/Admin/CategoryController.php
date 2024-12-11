@@ -28,16 +28,12 @@ class CategoryController extends Controller
                 'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif',
             ]
         );
-        $image     = $request->file('image');
-        $imageName = $image->getClientOriginalName();
-        $directory = 'uploads/category-images/';
-        $image->move($directory, $imageName);
-        $imageUrl = $directory . $imageName;
-
         $category              = new Category();
         $category->name        = $request->name;
         $category->description = $request->description;
-        $category->image       = $imageUrl;
+        if ($request->hasFile('image')) {
+            $category->image   = getFileUrl($request->file('image'), "uploads/category-images/");
+        }
         $category->status      = $request->status;
         $category->save();
 
@@ -53,28 +49,19 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         $category = Category::findOrFail($id);
-        if ($request->file('image')) {
-            $image     = $request->file('image');
-            $imageName = $image->getClientOriginalName();
-            $directory = 'uploads/category-images/';
-            $image->move($directory, $imageName);
-            $imageUrl = $directory . $imageName;
+        $category->name        = $request->name;
+        $category->description = $request->description;
+        if ($request->hasFile('image')) {
             if (file_exists($category->image)) {
                 unlink($category->image);
             }
-        } else {
-            $imageUrl = $category->image;
+            $category->image   = getFileUrl($request->file('image'), "uploads/category-images/");
         }
-
-        $category->name        = $request->name;
-        $category->description = $request->description;
-        $category->image       = $imageUrl;
         $category->status      = $request->status;
         $category->save();
 
         return redirect('/category/index')->with('message', 'Category info updated successfully');
     }
-
 
     public function destroy($id)
     {

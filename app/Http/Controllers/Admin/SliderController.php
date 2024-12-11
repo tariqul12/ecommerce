@@ -32,11 +32,9 @@ class SliderController extends Controller
     {
         $request->validate(
             [
-                'heading'     => 'required|string',
                 'title'       => 'required|string',
                 'sub_title'   => 'required|string',
                 'image'       => 'required',
-                'button_text' => 'required|string',
             ]
         );
         $image     = $request->file('image');
@@ -46,11 +44,9 @@ class SliderController extends Controller
         $imageUrl = $directory . $imageName;
 
         $slider              = new Slider();
-        $slider->heading     = $request->heading;
         $slider->title       = $request->title;
         $slider->sub_title   = $request->sub_title;
         $slider->image       = $imageUrl;
-        $slider->button_text = $request->button_text;
         $slider->button_link = $request->button_link;
         $slider->status      = $request->status;
         $slider->save();

@@ -14,27 +14,29 @@
     </div>
     <!-- PAGE-HEADER END -->
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6 m-auto">
             <div class="card">
                 <div class="card-header border-bottom">
                     <h3 class="card-title">Create Unit Form</h3>
                 </div>
                 <div class="card-body">
-                    <p class="text-muted">{{session('message')}}</p>
-                    <form class="form-horizontal" action="{{route('unit.store')}}" method="post">
+                    <p class="text-muted">{{ session('message') }}</p>
+                    <form class="form-horizontal" action="{{ route('unit.store') }}" method="post">
                         @csrf
                         <div class="row mb-4">
                             <label for="unitName" class="col-md-3 form-label">Unit Name</label>
                             <div class="col-md-9">
-                                <input class="form-control" name="name" id="unitName" placeholder="Unit Name" type="text">
-                                <span class="text-danger">{{$errors->has('name') ? $errors->first('name') : ''}}</span>
+                                <input class="form-control" name="name" id="unitName" placeholder="Unit Name"
+                                    type="text">
+                                <span class="text-danger">{{ $errors->has('name') ? $errors->first('name') : '' }}</span>
                             </div>
                         </div>
                         <div class="row mb-4">
                             <label for="unitCode" class="col-md-3 form-label">Unit Code</label>
                             <div class="col-md-9">
-                                <input class="form-control" name="code" id="unitCode" placeholder="Unit Code" type="text">
-                                <span class="text-danger">{{$errors->has('code') ? $errors->first('code') : ''}}</span>
+                                <input class="form-control" name="code" id="unitCode" placeholder="Unit Code"
+                                    type="text">
+                                <span class="text-danger">{{ $errors->has('code') ? $errors->first('code') : '' }}</span>
                             </div>
                         </div>
                         <div class="row mb-4">

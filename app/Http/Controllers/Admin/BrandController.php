@@ -37,17 +37,12 @@ class BrandController extends Controller
                 'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif',
             ]
         );
-
-        $image     = $request->file('image');
-        $imageName = $image->getClientOriginalName();
-        $directory = 'uploads/brand-images/';
-        $image->move($directory, $imageName);
-        $imageUrl = $directory . $imageName;
-
         $brand              = new Brand();
         $brand->name        = $request->name;
         $brand->description = $request->description;
-        $brand->image       = $imageUrl;
+        if ($request->hasFile('image')) {
+            $brand->image       = getFileUrl($request->file('image'), 'uploads/brand-images/');
+        }
         $brand->status      = $request->status;
         $brand->save();
 
@@ -75,21 +70,14 @@ class BrandController extends Controller
      */
     public function update(Request $request, Brand $brand)
     {
-        if ($request->file('image')) {
-            $image     = $request->file('image');
-            $imageName = $image->getClientOriginalName();
-            $directory = 'uploads/brand-images/';
-            $image->move($directory, $imageName);
-            $imageUrl = $directory . $imageName;
+        $brand->name        = $request->name;
+        $brand->description = $request->description;
+        if ($request->hasFile('image')) {
             if (file_exists($brand->image)) {
                 unlink($brand->image);
             }
-        } else {
-            $imageUrl = $brand->image;
+            $brand->image   = getFileUrl($request->file('image'), 'uploads/brand-images/');
         }
-        $brand->name        = $request->name;
-        $brand->description = $request->description;
-        $brand->image       = $imageUrl;
         $brand->status      = $request->status;
         $brand->save();
         return redirect('/brand')->with('message', 'Brand info updated successfully');

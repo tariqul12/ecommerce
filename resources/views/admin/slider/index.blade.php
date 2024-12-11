@@ -22,45 +22,46 @@
                     <h3 class="card-title">All Slider Info</h3>
                 </div>
                 <div class="card-body">
-                    <p id="sessionMessage" class="text-muted">{{session('message')}}</p>
+                    <p id="sessionMessage" class="text-muted">{{ session('message') }}</p>
                     <div class="table-responsive">
                         <table class="table table-bordered text-nowrap border-bottom" id="basic-datatable">
                             <thead>
-                            <tr>
-                                <th class="wd-15p border-bottom-0">Heading</th>
-                                <th class="wd-15p border-bottom-0">Title</th>
-                                <th class="wd-20p border-bottom-0">Sub Title</th>
-                                <th class="wd-15p border-bottom-0">Image</th>
-                                <th class="wd-10p border-bottom-0">Button Text</th>
-                                <th class="wd-10p border-bottom-0">Button Link</th>
-                                <th class="wd-10p border-bottom-0">Status</th>
-                                <th class="wd-25p border-bottom-0">Action</th>
-                            </tr>
+                                <tr>
+                                    <th class="wd-15p border-bottom-0">SL</th>
+                                    <th class="wd-15p border-bottom-0">Title</th>
+                                    <th class="wd-20p border-bottom-0">Sub Title</th>
+                                    <th class="wd-15p border-bottom-0">Image</th>
+                                    <th class="wd-10p border-bottom-0">Button Link</th>
+                                    <th class="wd-10p border-bottom-0">Status</th>
+                                    <th class="wd-25p border-bottom-0">Action</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            @foreach($sliders as $slider)
-                                <tr>
-                                    <td>{{$slider->heading}}</td>
-                                    <td>{{$slider->title}}</td>
-                                    <td>{{$slider->sub_title}}</td>
-                                    <td><img src="{{asset($slider->image)}}" alt="" height="50"></td>
-                                    <td>{{$slider->button_text}}</td>
-                                    <td>{{$slider->button_link}}</td>
-                                    <td>{{$slider->status==1 ? 'Published':'Unpublished'}}</td>
-                                    <td>
-                                        <a href="{{route('slider.edit', $slider->id)}}" class="btn btn-success btn-sm">
-                                            <i class="fa fa-edit"></i>
-                                        </a>
-                                        <form action="{{route('slider.destroy', $slider->id)}}" method="post" class="d-inline-block">
-                                            @csrf
-                                            @method('delete')
-                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure to delete this?')">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
+                                @foreach ($sliders as $slider)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $slider->title }}</td>
+                                        <td>{{ $slider->sub_title }}</td>
+                                        <td><img src="{{ asset($slider->image) }}" alt="" height="50"></td>
+                                        <td>{{ $slider->button_link }}</td>
+                                        <td>{{ $slider->status == 1 ? 'Published' : 'Unpublished' }}</td>
+                                        <td>
+                                            <a href="{{ route('slider.edit', $slider->id) }}"
+                                                class="btn btn-success btn-sm">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                            <form action="{{ route('slider.destroy', $slider->id) }}" method="post"
+                                                class="d-inline-block">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit" class="btn btn-danger btn-sm"
+                                                    onclick="return confirm('Are you sure to delete this?')">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -69,5 +70,4 @@
         </div>
     </div>
     <!-- End DataTable -->
-
 @endsection

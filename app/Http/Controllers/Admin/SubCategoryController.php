@@ -41,19 +41,15 @@ class SubCategoryController extends Controller
                 'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif',
             ]
         );
-        $image     = $request->file('image');
-        $imageName = $image->getClientOriginalName();
-        $directory = 'uploads/sub-category-images/';
-        $image->move($directory, $imageName);
-        $imageUrl = $directory . $imageName;
-
-        $subCategory              = new SubCategory();
-        $subCategory->category_id = $request->category_id;
-        $subCategory->name        = $request->name;
-        $subCategory->description = $request->description;
-        $subCategory->image       = $imageUrl;
-        $subCategory->status      = $request->status;
-        $subCategory->save();
+        $sub_category              = new SubCategory();
+        $sub_category->category_id = $request->category_id;
+        $sub_category->name        = $request->name;
+        $sub_category->description = $request->description;
+        if ($request->hasFile('image')) {
+            $sub_category->image   = getFileUrl($request->file('image'), 'uploads/sub-category-images/');
+        }
+        $sub_category->status      = $request->status;
+        $sub_category->save();
         return back()->with('message', 'Sub Category info created successfully');
     }
 
@@ -79,23 +75,15 @@ class SubCategoryController extends Controller
      */
     public function update(Request $request, SubCategory $sub_category)
     {
-        if ($request->file('image')) {
-            $image     = $request->file('image');
-            $imageName = $image->getClientOriginalName();
-            $directory = 'uploads/sub-category-images/';
-            $image->move($directory, $imageName);
-            $imageUrl = $directory . $imageName;
-            if (file_exists($sub_category->iamge)) {
-                unlink($sub_category->image);
-            }
-        } else {
-            $imageUrl = $sub_category->image;
-        }
-
         $sub_category->category_id = $request->category_id;
         $sub_category->name        = $request->name;
         $sub_category->description = $request->description;
-        $sub_category->image       = $imageUrl;
+        if ($request->hasFile('image')) {
+            if (file_exists($sub_category->iamge)) {
+                unlink($sub_category->image);
+            }
+            $sub_category->image   = getFileUrl($request->file('image'), 'uploads/sub-category-images/');
+        }
         $sub_category->status      = $request->status;
         $sub_category->save();
         return redirect('/sub-category')->with('message', 'Sub Category info updated successfully');

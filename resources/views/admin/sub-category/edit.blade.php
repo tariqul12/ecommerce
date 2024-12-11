@@ -14,7 +14,7 @@
     </div>
     <!-- PAGE-HEADER END -->
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6 m-auto">
             <div class="card">
                 <div class="card-header border-bottom">
                     <h3 class="card-title">Edit Sub Category Form</h3>
@@ -60,10 +60,10 @@
                         <div class="row mb-4">
                             <label class="col-md-3 form-label">Publication Status</label>
                             <div class="col-md-9">
-                                <label><input name="status" type="radio" {{ $sub_category->status == 1 ? 'checked' : '' }}
-                                        value="1">Published</label>
-                                <label><input name="status" type="radio" {{ $sub_category->status == 0 ? 'checked' : '' }}
-                                        value="0">Unpublished</label>
+                                <label><input name="status" type="radio"
+                                        {{ $sub_category->status == 1 ? 'checked' : '' }} value="1">Published</label>
+                                <label><input name="status" type="radio"
+                                        {{ $sub_category->status == 0 ? 'checked' : '' }} value="0">Unpublished</label>
                             </div>
                         </div>
                         <button class="btn btn-primary" type="submit">Update New Sub Category</button>

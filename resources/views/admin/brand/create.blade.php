@@ -14,7 +14,7 @@
     </div>
     <!-- PAGE-HEADER END -->
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6 m-auto">
             <div class="card">
                 <div class="card-header border-bottom">
                     <h3 class="card-title">Create Brand Form</h3>
