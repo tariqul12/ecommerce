@@ -98,3 +98,22 @@
         });
     }
 </script>
+<script>
+    const allRouteCheckbox = document.getElementById('allroute');
+    const routeCheckboxes = document.querySelectorAll('.route-checkbox');
+
+    // Add event listener to the "All Route Select" checkbox
+    allRouteCheckbox.addEventListener('change', function() {
+        const isChecked = allRouteCheckbox.checked;
+        routeCheckboxes.forEach(checkbox => {
+            checkbox.checked = isChecked;
+        });
+    });
+
+    // Optional: Update "All Route Select" checkbox based on individual checkboxes
+    routeCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            allRouteCheckbox.checked = Array.from(routeCheckboxes).every(cb => cb.checked);
+        });
+    });
+</script>

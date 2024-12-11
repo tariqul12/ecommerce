@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\Admin\CourierController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\CompanyController;
+use App\Http\Controllers\RoleController;
 
 //Website Route list
 Route::get('/', [WebsiteController::class, 'index'])->name('home');
@@ -79,6 +80,14 @@ Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
 //Admin Route List
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    //Category (Normal)
+    Route::get('/role/index', [RoleController::class, 'index'])->name('role.index');
+    Route::get('/role/create', [RoleController::class, 'create'])->name('role.create');
+    Route::post('/role/store', [RoleController::class, 'store'])->name('role.store');
+    Route::get('/role/edit/{id}', [RoleController::class, 'edit'])->name('role.edit');
+    Route::post('/role/update/{id}', [RoleController::class, 'update'])->name('role.update');
+    Route::get('/role/destroy/{id}', [RoleController::class, 'destroy'])->name('role.destroy');
 
     //Category (Normal)
     Route::get('/category/index', [CategoryController::class, 'index'])->name('category.index');
