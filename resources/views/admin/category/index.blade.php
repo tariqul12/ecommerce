@@ -20,7 +20,7 @@
             <div class="card">
                 <div class="card-header border-bottom">
                     <h3 class="card-title">All Category Info</h3>
-                    <a class="btn btn-info ms-auto" data-bs-target="#modaldemo1" data-bs-toggle="modal" href="">Add
+                    <a class="btn btn-info ms-auto" href="{{ route('category.create') }}">Add
                         Category</a>
                 </div>
                 <div class="card-body">
@@ -65,69 +65,4 @@
         </div>
     </div>
     <!-- End DataTable -->
-
-    <!-- BASIC MODAL -->
-    <div class="modal fade" id="modaldemo1">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content modal-content-demo">
-                <div class="modal-header">
-                    <h6 class="modal-title">Message Preview</h6><button aria-label="Close" class="btn-close"
-                        data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body">
-                    <div class="card">
-                        <div class="card-header border-bottom">
-                            <h3 class="card-title">Create Category Form</h3>
-                        </div>
-                        <div class="card-body">
-                            <p class="text-muted">{{ session('message') }}</p>
-                            <form class="form-horizontal" action="{{ route('category.store') }}"
-                                enctype="multipart/form-data" method="post">
-                                @csrf
-                                <div class="row mb-4">
-                                    <label for="categoryName" class="col-md-3 form-label">Category Name</label>
-                                    <div class="col-md-9">
-                                        <input class="form-control" name="name" id="categoryName"
-                                            placeholder="Category Name" type="text">
-                                        <span
-                                            class="text-danger">{{ $errors->has('name') ? $errors->first('name') : '' }}</span>
-                                    </div>
-                                </div>
-                                <div class="row mb-4">
-                                    <label for="categoryDescription" class="col-md-3 form-label">Category
-                                        Description</label>
-                                    <div class="col-md-9">
-                                        <textarea class="form-control" name="description" id="categoryDescription" placeholder="Category Description"></textarea>
-                                        <span
-                                            class="text-danger">{{ $errors->has('description') ? $errors->first('description') : '' }}</span>
-                                    </div>
-                                </div>
-                                <div class="row mb-4">
-                                    <label for="image" class="col-md-3 form-label">Category Image</label>
-                                    <div class="col-md-9">
-                                        <input class="dropify" data-height="200" name="image" id="image"
-                                            type="file">
-                                        <span
-                                            class="text-danger">{{ $errors->has('image') ? $errors->first('image') : '' }}</span>
-                                    </div>
-                                </div>
-                                <div class="row mb-4">
-                                    <label class="col-md-3 form-label">Publication Status</label>
-                                    <div class="col-md-9">
-                                        <label><input name="status" type="radio" checked value="1">Published</label>
-                                        <label><input name="status" type="radio" value="0">Unpublished</label>
-                                    </div>
-                                </div>
-                                <button class="btn btn-primary" type="submit">Create New Category</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary">Save changes</button> <button class="btn btn-light"
-                        data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection

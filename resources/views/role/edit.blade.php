@@ -3,57 +3,86 @@
     <!-- PAGE-HEADER -->
     <div class="page-header">
         <div>
-            <h1 class="page-title">Category Module</h1>
+            <h1 class="page-title">Role Module</h1>
         </div>
         <div class="ms-auto pageheader-btn">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="javascript:void(0);">Category</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Edit Category</li>
+                <li class="breadcrumb-item"><a href="javascript:void(0);">Role</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Edit Role</li>
             </ol>
         </div>
     </div>
     <!-- PAGE-HEADER END -->
     <div class="row">
-        <div class="col-md-6 m-auto">
+        <div class="col-md-10 m-auto">
             <div class="card">
                 <div class="card-header border-bottom">
-                    <h3 class="card-title">Edit Category Form</h3>
+                    <h3 class="card-title">Edit Role Form</h3>
+                    <a class="btn btn-info ms-auto" href="{{ route('role.index') }}">All
+                        Role</a>
                 </div>
                 <div class="card-body">
                     <p class="text-muted">{{ session('message') }}</p>
-                    <form class="form-horizontal" action="{{ route('category.update', ['id' => $category->id]) }}"
-                        enctype="multipart/form-data" method="post">
+                    <form class="form-horizontal" action="{{ route('role.update', ['id' => $role->id]) }}"
+                        enctype="multipart/form-data" method="POST">
                         @csrf
                         <div class="row mb-4">
-                            <label for="categoryName" class="col-md-3 form-label">Category Name</label>
-                            <div class="col-md-9">
-                                <input class="form-control" name="name" value="{{ $category->name }}" id="categoryName"
-                                    placeholder="Category Name" type="text">
+                            <label for="roleName" class="col-md-2 form-label">Role Name</label>
+                            <div class="col-md-10">
+                                <input class="form-control" name="name" value="{{ $role->name }}" id="roleName"
+                                    placeholder="Role Name" type="text">
                             </div>
                         </div>
                         <div class="row mb-4">
-                            <label for="categoryDescription" class="col-md-3 form-label">Category Description</label>
-                            <div class="col-md-9">
-                                <textarea class="form-control" name="description" id="categoryDescription" placeholder="Category Description">{{ $category->description }}</textarea>
+                            <label for="roleDescription" class="col-md-2 form-label">Role Description</label>
+                            <div class="col-md-10">
+                                <textarea class="form-control" name="description" id="roleDescription" placeholder="Role Description">{{ $role->description }}</textarea>
                             </div>
                         </div>
                         <div class="row mb-4">
-                            <label for="image" class="col-md-3 form-label">Category Image</label>
-                            <div class="col-md-9">
-                                <input class="dropify" data-height="200" name="image" id="image" type="file">
-                                <img src="{{ asset($category->image) }}" alt="" height="100">
+                            <label for="role_description" class="col-2 form-label">Route Select</label>
+                            <div class="col-10">
+                                <label for=""><input type="checkbox" name="" id="allroute">All Route
+                                    Select</label>
                             </div>
                         </div>
                         <div class="row mb-4">
-                            <label class="col-md-3 form-label">Publication Status</label>
-                            <div class="col-md-9">
-                                <label><input name="status" type="radio" {{ $category->status == 1 ? 'checked' : '' }}
-                                        value="1">Published</label>
-                                <label><input name="status" type="radio" {{ $category->status == 0 ? 'checked' : '' }}
-                                        value="0">Unpublished</label>
+                            <label for="" class="col-2 form-label">Route Name</label>
+                            <div class="col-10">
+                                @foreach ($routeLists as $key => $item)
+                                    @if (
+                                        $item->getName() != 'livewire.update' &&
+                                            $item->getName() != 'livewire.preview-file' &&
+                                            $item->getName() != 'password.request' &&
+                                            $item->getName() != 'password.reset' &&
+                                            $item->getName() != 'password.email' &&
+                                            $item->getName() != 'password.update' &&
+                                            $item->getName() != 'password.confirm' &&
+                                            $item->getName() != 'password.confirmation' &&
+                                            $item->getName() != 'password.confirm.store' &&
+                                            $item->getName() != 'two-factor.login' &&
+                                            $item->getName() != 'two-factor.login.store' &&
+                                            $item->getName() != 'two-factor.enable' &&
+                                            $item->getName() != 'two-factor.confirm' &&
+                                            $item->getName() != 'two-factor.disable' &&
+                                            $item->getName() != 'two-factor.qr-code' &&
+                                            $item->getName() != 'two-factor.secret-key' &&
+                                            $item->getName() != 'two-factor.recovery-codes' &&
+                                            $item->getName() != 'sanctum.csrf-cookie' &&
+                                            $item->getName() != 'livewire.upload-file' &&
+                                            $item->getName() != 'profile.show' &&
+                                            $item->getName() != '')
+                                        <label for="route{{ $key }}"><input name="route_name[]"
+                                                value="{{ $item->getName() }}" class="route-checkbox"
+                                                id="route{{ $key }}"
+                                                @foreach ($role->roleRoutes as $route) {{ $route->route_name == $item->getName() ? 'checked' : '' }} @endforeach
+                                                type="checkbox">{{ $item->getName() }}</label>
+                                    @endif
+                                @endforeach
+
                             </div>
                         </div>
-                        <button class="btn btn-primary" type="submit">Update Category Info</button>
+                        <button class="btn btn-primary" type="submit">Update Role Info</button>
                     </form>
                 </div>
             </div>

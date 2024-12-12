@@ -18,6 +18,8 @@
             <div class="card">
                 <div class="card-header border-bottom">
                     <h3 class="card-title">Edit Brand Form</h3>
+                    <a class="btn btn-info ms-auto" href="{{ route('brand.index') }}">All
+                        Brand</a>
                 </div>
                 <div class="card-body">
                     <p class="text-muted">{{ session('message') }}</p>

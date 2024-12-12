@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 
@@ -22,7 +23,8 @@ class SliderController extends Controller
      */
     public function create()
     {
-        return view('admin.slider.create');
+        $products = Product::whereStatus(1)->latest()->get();
+        return view('admin.slider.create', compact('products'));
     }
 
     /**
@@ -33,21 +35,16 @@ class SliderController extends Controller
         $request->validate(
             [
                 'title'       => 'required|string',
+                'product_id'  => 'required',
                 'sub_title'   => 'required|string',
                 'image'       => 'required',
             ]
         );
-        $image     = $request->file('image');
-        $imageName = $image->getClientOriginalName();
-        $directory = 'uploads/slider-images/';
-        $image->move($directory, $imageName);
-        $imageUrl = $directory . $imageName;
-
         $slider              = new Slider();
         $slider->title       = $request->title;
+        $slider->product_id  = $request->product_id;
         $slider->sub_title   = $request->sub_title;
-        $slider->image       = $imageUrl;
-        $slider->button_link = $request->button_link;
+        $slider->image       = getFileUrl($request->file('image'), 'uploads/slider-images/');
         $slider->status      = $request->status;
         $slider->save();
 
@@ -67,7 +64,8 @@ class SliderController extends Controller
      */
     public function edit(Slider $slider)
     {
-        return view('admin.slider.edit', ['slider' => $slider]);
+        $products = Product::whereStatus(1)->latest()->get();
+        return view('admin.slider.edit', compact('slider', 'products'));
     }
 
     /**
@@ -75,25 +73,12 @@ class SliderController extends Controller
      */
     public function update(Request $request, Slider $slider)
     {
-        if ($request->file('image')) {
-            $image     = $request->file('image');
-            $imageName = $image->getClientOriginalName();
-            $directory = 'uploads/slider-images/';
-            $image->move($directory, $imageName);
-            $imageUrl = $directory . $imageName;
-            if (file_exists($slider->image)) {
-                unlink($slider->image);
-            }
-        } else {
-            $imageUrl = $slider->image;
-        }
-
-        $slider->heading     = $request->heading;
         $slider->title       = $request->title;
+        $slider->product_id  = $request->product_id;
         $slider->sub_title   = $request->sub_title;
-        $slider->image       = $imageUrl;
-        $slider->button_text = $request->button_text;
-        $slider->button_link = $request->button_link;
+        if ($request->hasFile('image')) {
+            $slider->image       = getFileUrl($request->file('image'), 'uploads/slider-images/');
+        }
         $slider->status      = $request->status;
         $slider->save();
         return redirect('/slider')->with('message', 'Slider info updated successfully');

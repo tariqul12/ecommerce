@@ -18,6 +18,8 @@
             <div class="card">
                 <div class="card-header border-bottom">
                     <h3 class="card-title">Create Role Form</h3>
+                    <a class="btn btn-info ms-auto" href="{{ route('role.index') }}">All
+                        Role</a>
                 </div>
                 <div class="card-body">
                     <p class="text-muted">{{ session('message') }}</p>
@@ -50,7 +52,7 @@
                         <div class="row mb-4">
                             <label for="" class="col-2 form-label">Route Name</label>
                             <div class="col-10">
-                                @foreach ($routeList as $key => $item)
+                                @foreach ($routeLists as $key => $item)
                                     @if (
                                         $item->getName() != 'livewire.update' &&
                                             $item->getName() != 'livewire.preview-file' &&

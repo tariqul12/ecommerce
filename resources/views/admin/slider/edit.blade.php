@@ -18,6 +18,8 @@
             <div class="card">
                 <div class="card-header border-bottom">
                     <h3 class="card-title">Edit Slider Form</h3>
+                    <a class="btn btn-info ms-auto" href="{{ route('slider.index') }}">All
+                        Slider</a>
                 </div>
                 <div class="card-body">
                     <p class="text-muted">{{ session('message') }}</p>
@@ -25,6 +27,21 @@
                         enctype="multipart/form-data" method="post">
                         @csrf
                         @method('put')
+
+                        <div class="row mb-4">
+                            <label for="" class="col-md-3 form-label">Product</label>
+                            <div class="col-md-9">
+                                <select name="product_id" class=" form-control" id="">
+                                    <option value="">select One</option>
+                                    @foreach ($products as $item)
+                                        <option value="{{ $item->id }}" @selected($item->id == $slider->product_id)>{{ $item->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <span
+                                    class="text-danger">{{ $errors->has('product_id') ? $errors->first('product_id') : '' }}</span>
+                            </div>
+                        </div>
 
                         <div class="row mb-4">
                             <label for="brandDescription" class="col-md-3 form-label">Slider Title</label>
@@ -43,12 +60,6 @@
                             <div class="col-md-9">
                                 <input class="dropify" data-height="200" name="image" id="image" type="file">
                                 <img src="{{ asset($slider->image) }}" alt="" height="100">
-                            </div>
-                        </div>
-                        <div class="row mb-4">
-                            <label for="brandDescription" class="col-md-3 form-label">Slider Button Link</label>
-                            <div class="col-md-9">
-                                <textarea class="form-control" name="button_link" id="brandDescription" placeholder="Slider Title">{{ $slider->button_link }}</textarea>
                             </div>
                         </div>
                         <div class="row mb-4">

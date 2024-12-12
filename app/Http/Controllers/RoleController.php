@@ -11,13 +11,14 @@ class RoleController extends Controller
 {
     public function index()
     {
-        return view('role.index');
+        $roles = Role::latest()->get();
+        return view('role.index', compact('roles'));
     }
     public function create()
     {
-        $routeList = Route::getRoutes();
+        $routeLists = Route::getRoutes();
 
-        return view('role.create', compact('routeList'));
+        return view('role.create', compact('routeLists'));
     }
 
     public function store(Request $request)
@@ -43,8 +44,34 @@ class RoleController extends Controller
         }
         return back()->with('message', 'Role Create Successfully');
     }
-    public function edit()
+    public function edit($id)
     {
-        return view('role.edit');
+        $role = Role::find($id);
+        $routeLists = Route::getRoutes();
+        return view('role.edit', compact('role', 'routeLists'));
+    }
+    public function update(Request $request, $id)
+    {
+
+        $role = Role::find($id);
+        $role->name = $request->name;
+        $role->description = $request->description;
+        $role->save();
+
+        if ($request->route_name) {
+            $routeRoute = Route::where('role_id', $role->id)->get();
+            foreach ($routeRoute as $item) {
+                $item->delete();
+            }
+        }
+
+        foreach ($request->route_name as $item) {
+            $roleRoute = new RoleRoute();
+            $roleRoute->role_id = $role->id;
+            $roleRoute->role_name = $role->name;
+            $roleRoute->route_name = $item;
+            $roleRoute->save();
+        }
+        return redirect('/role/index')->with('message', 'Role Update successfully');
     }
 }

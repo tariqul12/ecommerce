@@ -20,6 +20,8 @@
             <div class="card">
                 <div class="card-header border-bottom">
                     <h3 class="card-title">All Sub Category Info</h3>
+                    <a class="btn btn-info ms-auto" href="{{ route('sub-category.create') }}">add
+                        Sub Category</a>
                 </div>
                 <div class="card-body">
                     <p id="sessionMessage" class="text-muted">{{ session('message') }}</p>
@@ -40,8 +42,6 @@
                                 @foreach ($subCategories as $sub_category)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        {{-- <td>{{$sub_category->category_id}}</td> --}} {{-- for category_id showing --}}
-                                        {{-- <td>{{$sub_category->category}}</td> --}}{{-- here category is the function from SubCategory Model which collect all info from specific category_id --}}
                                         <td>{{ $sub_category->category->name }}</td>
                                         <td>{{ $sub_category->name }}</td>
                                         <td>{{ $sub_category->description }}</td>

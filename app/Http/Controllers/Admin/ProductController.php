@@ -47,33 +47,26 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //return $request;
         $request->validate([
             'category_id'       => 'required|integer|exists:categories,id',
-            'sub_category_id'   => 'required|integer|exists:sub_categories,id',
-            'brand_id'          => 'required|integer|exists:brands,id',
+            'sub_category_id'   => 'nullable|integer|exists:sub_categories,id',
+            'brand_id'          => 'nullable|integer|exists:brands,id',
             'unit_id'           => 'required|integer|exists:units,id',
             'name'              => 'required|string|unique:products,name',
             'code'              => 'required|string|unique:products,code',
             'short_description' => 'nullable|string|max:255',
             'long_description'  => 'nullable|string',
             'regular_price'     => 'required|integer|min:0',
-            'selling_price'     => 'required|integer|min:0|lt:regular_price',
+            'selling_price'     => 'required|integer|min:0',
             'stock_amount'      => 'required|integer|min:0',
             'meta_title'        => 'nullable|string|max:255',
-            'meta_description'  => 'nullable|string|max:1000',
+            'meta_description'  => 'nullable|string|',
             'image'             => 'required|image|mimes:jpeg,png,jpg,gif',
             'other_image'       => 'required',
             'other_image.*'     => 'required|image|mimes:jpeg,png,jpg,gif',
             'hit_count'         => 'integer|min:0',
             'sales_count'       => 'integer|min:0'
         ]);
-
-        $image     = $request->file('image');
-        $imageName = $image->getClientOriginalName();
-        $directory = 'uploads/product-images/';
-        $image->move($directory, $imageName);
-        $imageUrl = $directory . $imageName;
 
         $product                    = new Product();
         $product->category_id       = $request->category_id;
@@ -89,19 +82,14 @@ class ProductController extends Controller
         $product->stock_amount      = $request->stock_amount;
         $product->meta_title        = $request->meta_title;
         $product->meta_description  = $request->meta_description;
-        $product->image             = $imageUrl;
+        $product->image             = getFileUrl($request->file('image'), 'uploads/product-images/');
         $product->status            = $request->status;
         $product->save();
 
         foreach ($request->file('other_image') as $image) {
-            $imageName = $image->getClientOriginalName();
-            $directory = 'uploads/product-other-images/';
-            $image->move($directory, $imageName);
-            $imageUrl = $directory . $imageName;
-
             $productImage             = new ProductImage();
             $productImage->product_id = $product->id;
-            $productImage->image      = $imageUrl;
+            $productImage->image      = getFileUrl($image, 'uploads/product-images/');
             $productImage->save();
         }
         return back()->with('message', 'Product info created successfully');
@@ -132,18 +120,6 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        if ($request->file('image')) {
-            $image     = $request->file('image');
-            $imageName = $image->getClientOriginalName();
-            $directory = 'uploads/product-images/';
-            $image->move($directory, $imageName);
-            $imageUrl = $directory . $imageName;
-            if (file_exists($product->image)) {
-                unlink($product->image);
-            }
-        } else {
-            $imageUrl = $product->image;
-        }
         $product->category_id       = $request->category_id;
         $product->sub_category_id   = $request->sub_category_id;
         $product->brand_id          = $request->brand_id;
@@ -157,7 +133,9 @@ class ProductController extends Controller
         $product->stock_amount      = $request->stock_amount;
         $product->meta_title        = $request->meta_title;
         $product->meta_description  = $request->meta_description;
-        $product->image             = $imageUrl;
+        if ($request->hasFile('image')) {
+            $product->image         = getFileUrl($request->file('image'), 'uploads/product-images/');
+        }
         $product->status            = $request->status;
         $product->save();
 
@@ -167,19 +145,14 @@ class ProductController extends Controller
             foreach ($productImages as $productImage) {
                 if (file_exists($productImage->image)) {
                     unlink($productImage->image);
+                    $productImage->delete();
                 }
-                $productImage->delete();
             }
 
             foreach ($request->file('other_image') as $image) {
-                $imageName = $image->getClientOriginalName();
-                $directory = 'uploads/product-other-images/';
-                $image->move($directory, $imageName);
-                $imageUrl = $directory . $imageName;
-
                 $productImage             = new ProductImage();
                 $productImage->product_id = $product->id;
-                $productImage->image      = $imageUrl;
+                $productImage->image      = getFileUrl($image, 'uploads/product-other-images/');
                 $productImage->save();
             }
         }

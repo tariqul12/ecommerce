@@ -20,6 +20,8 @@
             <div class="card">
                 <div class="card-header border-bottom">
                     <h3 class="card-title">All Slider Info</h3>
+                    <a class="btn btn-info ms-auto" href="{{ route('slider.create') }}">Add
+                        Slider</a>
                 </div>
                 <div class="card-body">
                     <p id="sessionMessage" class="text-muted">{{ session('message') }}</p>
@@ -28,10 +30,10 @@
                             <thead>
                                 <tr>
                                     <th class="wd-15p border-bottom-0">SL</th>
+                                    <th class="wd-15p border-bottom-0">Products</th>
                                     <th class="wd-15p border-bottom-0">Title</th>
                                     <th class="wd-20p border-bottom-0">Sub Title</th>
                                     <th class="wd-15p border-bottom-0">Image</th>
-                                    <th class="wd-10p border-bottom-0">Button Link</th>
                                     <th class="wd-10p border-bottom-0">Status</th>
                                     <th class="wd-25p border-bottom-0">Action</th>
                                 </tr>
@@ -40,10 +42,10 @@
                                 @foreach ($sliders as $slider)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $slider->product->name }}</td>
                                         <td>{{ $slider->title }}</td>
                                         <td>{{ $slider->sub_title }}</td>
                                         <td><img src="{{ asset($slider->image) }}" alt="" height="50"></td>
-                                        <td>{{ $slider->button_link }}</td>
                                         <td>{{ $slider->status == 1 ? 'Published' : 'Unpublished' }}</td>
                                         <td>
                                             <a href="{{ route('slider.edit', $slider->id) }}"

@@ -6,5 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
-    //
+    public function roleRoutes()
+    {
+        return $this->hasMany(RoleRoute::class);
+    }
 }
